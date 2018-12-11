@@ -8,7 +8,6 @@ public:
 	int length;
 	Tail* tailStart;
 	Tail* tailEnd;
-	Tail* secondLastTail;
 	void update(snakeResult result);
 	int getX();
 	int getY();

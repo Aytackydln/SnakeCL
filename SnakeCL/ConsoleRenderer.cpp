@@ -11,18 +11,20 @@ void ConsoleRenderer::draw(){
 	for(int x=0; x<Scene::WIDTH; x++){
 		for(int y=0; y<Scene::HEIGHT; y++){
 			switch(scene->field[y][x]){
+				case FOOD:
+					sceneStrings[y][x]='*';
+					break;
 				case TAIL:
 					sceneStrings[y][x]='O';
 					break;
 				case EMPTY:
 				default:
-					sceneStrings[y][x]='-';
+					sceneStrings[y][x]=' ';
 					break;
 			}
 		}
 	}
 	moveCursor(std::cout, 1, 1);
-	//system("CLS");
 	printf("Drawing\n");
 
 	for(int i=0; i<Scene::WIDTH; i++){

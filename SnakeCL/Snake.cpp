@@ -3,6 +3,7 @@
 
 
 void Snake::update(snakeResult result){
+	/*
 	switch(result){
 		case NOTHING:
 			removeLastTail();
@@ -12,6 +13,7 @@ void Snake::update(snakeResult result){
 		default:
 			break;
 	}
+	*/
 }
 
 int Snake::getX(){
@@ -23,15 +25,14 @@ int Snake::getY(){
 }
 
 void Snake::extend(int _x, int _y){
-	tailStart=new Tail(_x, _y, tailStart);
-	if(!secondLastTail){
-		secondLastTail=tailStart;
-	}
+	tailStart->previous=new Tail(_x, _y, tailStart);
+	tailStart=tailStart->previous;
 }
 
 void Snake::removeLastTail(){
-	delete secondLastTail->next;
-	secondLastTail->next=0;
+	Tail* tailToRemove=tailEnd;
+	tailEnd=tailToRemove->previous;
+	delete tailToRemove;
 }
 
 Snake::Snake(){
