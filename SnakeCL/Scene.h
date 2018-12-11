@@ -11,7 +11,7 @@ private:
 	snakeResult moveSnake();
 	direction snakeDirection;
 public:
-	static const int WIDTH=10;
+	static const int WIDTH=15;
 	static const int HEIGHT=10;
 	tileType field[HEIGHT][WIDTH];
 	Snake snake;

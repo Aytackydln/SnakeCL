@@ -1,6 +1,5 @@
 #include "pch.h"
 #include "ConsoleRenderer.h"
-#include <iostream>
 
 
 ConsoleRenderer::ConsoleRenderer(Scene* _scene){
@@ -13,21 +12,36 @@ void ConsoleRenderer::draw(){
 		for(int y=0; y<Scene::HEIGHT; y++){
 			switch(scene->field[y][x]){
 				case TAIL:
-					sceneStrings[y][x]='T';
+					sceneStrings[y][x]='O';
 					break;
 				case EMPTY:
 				default:
-					sceneStrings[y][x]=' ';
+					sceneStrings[y][x]='-';
 					break;
 			}
 		}
 	}
-
-	system("CLS");
+	moveCursor(std::cout, 1, 1);
+	//system("CLS");
 	printf("Drawing\n");
 
-	for(int i=0; i<Scene::HEIGHT; i++){
-		//printf("s%s\n", sceneStrings[i]);
-		printf("s%s\n", sceneStrings[i]);
+	for(int i=0; i<Scene::WIDTH; i++){
+		printf("_");
 	}
+	printf("\n");
+	for(int y=0; y<Scene::HEIGHT; y++){
+		printf("|");
+		for(int x=0; x<Scene::WIDTH; x++){
+			printf("%c", sceneStrings[y][x]);
+		}
+		printf("|\n");
+	}
+	for(int i=0; i<Scene::WIDTH; i++){
+		printf("_");
+	}
+	printf("\n");
+}
+
+void ConsoleRenderer::moveCursor(std::ostream& os, int col, int row){
+	os<<"\033["<<col<<";"<<row<<"H";
 }
