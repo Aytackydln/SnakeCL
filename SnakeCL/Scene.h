@@ -14,15 +14,16 @@ enum direction{
 class Scene{
 private:
 	snakeResult moveSnake();
-	direction snakeDirection;
 	std::vector<int> foods;
 public:
-	static const int WIDTH=15;
-	static const int HEIGHT=10;
+	direction snakeDirection;
+	static const int WIDTH=20;
+	static const int HEIGHT=15;
 	tileType field[HEIGHT][WIDTH];
 	Snake snake;
 	void updateField();
 	void createRandomFood();
+	void initialize();
 	Scene();
 	~Scene();
 };

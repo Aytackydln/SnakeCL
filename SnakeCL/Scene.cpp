@@ -26,8 +26,10 @@ snakeResult Scene::moveSnake(){
 		default:
 			break;
 	}
-	nextX%=WIDTH;
-	nextY%=HEIGHT;
+	if(nextX!=-1)nextX%=WIDTH;
+	else nextX=WIDTH-1;
+	if(nextY!=-1)nextY%=HEIGHT;
+	else nextY=HEIGHT-1;
 	tileType nextTile=field[nextY][nextX];
 	switch(nextTile){
 		case TAIL:
@@ -49,25 +51,27 @@ snakeResult Scene::moveSnake(){
 }
 
 void Scene::updateField(){
-	moveSnake();
-
-	for(int x=0; x<WIDTH; x++){
-		for(int y=0; y<HEIGHT; y++){
-			field[y][x]=EMPTY;
+	if(moveSnake()!=FAIL){
+		for(int x=0; x<WIDTH; x++){
+			for(int y=0; y<HEIGHT; y++){
+				field[y][x]=EMPTY;
+			}
 		}
-	}
 
-	Tail* nextTail=snake.tailStart;
-	while(nextTail){
-		field[nextTail->y][nextTail->x]=TAIL;
-		nextTail=nextTail->next;
+		Tail* nextTail=snake.tailStart;
+		while(nextTail){
+			field[nextTail->y][nextTail->x]=TAIL;
+			nextTail=nextTail->next;
+		}
+		for(int i=0; i<foods.size(); i+=2){
+			const int x=foods[i];
+			const int y=foods[i+1];
+			field[y][x]=FOOD;
+		}
+	} else{
+		initialize();
+		snake.initialize();
 	}
-	for(int i=0; i<foods.size(); i+=2){
-		const int x=foods[i];
-		const int y=foods[i+1];
-		field[y][x]=FOOD;
-	}
-
 }
 
 void Scene::createRandomFood(){
@@ -84,20 +88,27 @@ void Scene::createRandomFood(){
 			default:
 				randX=std::rand()%WIDTH;
 				randY=std::rand()%HEIGHT;
-				search=false;
 				break;
 		}
 	}
-	foods.push_back(randX);
-	foods.push_back(randY);
+	foods.emplace_back(randX);
+	foods.emplace_back(randY);
 	field[randY][randX]=FOOD;
 }
 
+void Scene::initialize(){
+	for(int x=0; x<WIDTH; x++){
+		for(int y=0; y<HEIGHT; y++){
+			field[y][x]=EMPTY;
+		}
+	}
+}
+
 Scene::Scene(){
+	initialize();
 	snakeDirection=RIGHT;
 	createRandomFood();
 }
-
 
 Scene::~Scene(){
 }

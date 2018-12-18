@@ -6,8 +6,8 @@ enum snakeResult{
 class Snake{
 public:
 	int length;
-	Tail* tailStart;
-	Tail* tailEnd;
+	Tail* tailStart=nullptr;
+	Tail* tailEnd=nullptr;
 	void update(snakeResult result);
 	int getX();
 	int getY();
@@ -15,5 +15,6 @@ public:
 	void removeLastTail();
 	Snake();
 	~Snake();
+	void initialize();
 };
 

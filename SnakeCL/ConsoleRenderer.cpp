@@ -7,7 +7,6 @@ ConsoleRenderer::ConsoleRenderer(Scene* _scene){
 }
 
 void ConsoleRenderer::draw(){
-	printf("Rendering\n");
 	for(int x=0; x<Scene::WIDTH; x++){
 		for(int y=0; y<Scene::HEIGHT; y++){
 			switch(scene->field[y][x]){
@@ -18,16 +17,34 @@ void ConsoleRenderer::draw(){
 					sceneStrings[y][x]='O';
 					break;
 				case EMPTY:
-				default:
 					sceneStrings[y][x]=' ';
+					break;
+				default:
 					break;
 			}
 		}
 	}
-	moveCursor(std::cout, 1, 1);
-	printf("Drawing\n");
+	char dir;
+	switch(scene->snakeDirection){
+		case RIGHT:
+			dir='>';
+			break;
+		case LEFT:
+			dir='<';
+			break;
+		case DOWN:
+			dir='v';
+			break;
+		case UP:
+			dir='^';
+			break;
+		default:
+			break;
+	}
+	sceneStrings[scene->snake.getY()][scene->snake.getX()]=dir;
 
-	for(int i=0; i<Scene::WIDTH; i++){
+	moveCursor(std::cout, 1, 1);
+	for(int i=-2; i<Scene::WIDTH; i++){
 		printf("_");
 	}
 	printf("\n");
@@ -38,10 +55,11 @@ void ConsoleRenderer::draw(){
 		}
 		printf("|\n");
 	}
-	for(int i=0; i<Scene::WIDTH; i++){
+	for(int i=-2; i<Scene::WIDTH; i++){
 		printf("_");
 	}
 	printf("\n");
+
 }
 
 void ConsoleRenderer::moveCursor(std::ostream& os, int col, int row){

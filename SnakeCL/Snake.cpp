@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "Snake.h"
+#include <stdio.h>
 
 
 void Snake::update(snakeResult result){
@@ -25,6 +26,7 @@ int Snake::getY(){
 }
 
 void Snake::extend(int _x, int _y){
+	length++;
 	tailStart->previous=new Tail(_x, _y, tailStart);
 	tailStart=tailStart->previous;
 }
@@ -36,10 +38,15 @@ void Snake::removeLastTail(){
 }
 
 Snake::Snake(){
-	tailStart=new Tail();
-	tailEnd=tailStart;
+	initialize();
 }
 
 Snake::~Snake(){
 	delete tailStart;
+}
+
+void Snake::initialize(){
+	if(tailStart) delete tailStart;
+	tailStart=new Tail();
+	tailEnd=tailStart;
 }
