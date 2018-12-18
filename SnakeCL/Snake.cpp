@@ -32,6 +32,7 @@ void Snake::extend(int _x, int _y){
 }
 
 void Snake::removeLastTail(){
+	length--;
 	Tail* tailToRemove=tailEnd;
 	tailEnd=tailToRemove->previous;
 	delete tailToRemove;

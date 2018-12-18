@@ -17,8 +17,8 @@ private:
 	std::vector<int> foods;
 public:
 	direction snakeDirection;
-	static const int WIDTH=20;
-	static const int HEIGHT=15;
+	static const int WIDTH=50;
+	static const int HEIGHT=25;
 	tileType field[HEIGHT][WIDTH];
 	Snake snake;
 	void updateField();
